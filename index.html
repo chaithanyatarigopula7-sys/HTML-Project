@@ -1,0 +1,1302 @@
+  ```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HomeBite - Homemade Food</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fffaf4;
+    color: #222;
+}
+
+/* NAVBAR */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 3px 20px rgba(0,0,0,.08);
+}
+
+nav {
+    max-width: 1200px;
+    height: 75px;
+    margin: auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 700;
+    color: #17823b;
+}
+
+.logo span {
+    color: #ff7a00;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: #17823b;
+}
+
+.cart {
+    border: none;
+    background: #17823b;
+    color: white;
+    padding: 11px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+/* HERO SLIDER */
+
+.slider {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.08);
+    transition: opacity 1s ease, transform 5s ease;
+    display: flex;
+    align-items: center;
+}
+
+.slide.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(0,0,0,.75),
+        rgba(0,0,0,.35),
+        rgba(0,0,0,.1)
+    );
+}
+
+.slide1 {
+    background-image: url(
+        "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=85"
+    );
+}
+
+.slide2 {
+    background-image: url(
+        "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=1600&q=85"
+    );
+}
+
+.slide3 {
+    background-image: url(
+        "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=1600&q=85"
+    );
+}
+
+.slide-content {
+    position: relative;
+    z-index: 3;
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    padding: 30px;
+    color: white;
+}
+
+.slide-content small {
+    color: #ffb15c;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.slide-content h1 {
+    font-size: 60px;
+    line-height: 1.15;
+    max-width: 650px;
+    margin: 15px 0;
+}
+
+.slide-content h1 span {
+    color: #ff9b35;
+}
+
+.slide-content p {
+    max-width: 550px;
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    color: #eee;
+}
+
+.order-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: #ff7a00;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: 600;
+}
+
+.order-btn:hover {
+    background: #e96900;
+}
+
+/* HERO ARROWS */
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,.2);
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.arrow:hover {
+    background: #ff7a00;
+}
+
+.prev {
+    left: 25px;
+}
+
+.next {
+    right: 25px;
+}
+
+/* DOTS */
+
+.dots {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: white;
+    opacity: .5;
+    cursor: pointer;
+}
+
+.dot.active {
+    opacity: 1;
+    background: #ff7a00;
+    transform: scale(1.3);
+}
+
+/* FEATURES */
+
+.features {
+    background: #f1f8f2;
+    padding: 45px 20px;
+}
+
+.feature-container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+}
+
+.feature {
+    text-align: center;
+    padding: 20px;
+}
+
+.feature-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.feature h3 {
+    margin-bottom: 7px;
+}
+
+.feature p {
+    color: #777;
+    font-size: 13px;
+}
+
+/* SECTIONS */
+
+.section {
+    max-width: 1200px;
+    margin: auto;
+    padding: 80px 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title h2 {
+    font-size: 38px;
+}
+
+.section-title h2 span {
+    color: #17823b;
+}
+
+.section-title p {
+    color: #777;
+}
+
+/* FOOD SLIDER */
+
+.food-slider {
+    position: relative;
+    overflow: hidden;
+}
+
+.food-track {
+    display: flex;
+    gap: 25px;
+    transition: transform .6s ease;
+}
+
+.food-card {
+    min-width: calc(25% - 19px);
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,.08);
+    transition: .3s;
+}
+
+.food-card:hover {
+    transform: translateY(-8px);
+}
+
+.food-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.food-info {
+    padding: 20px;
+}
+
+.food-info h3 {
+    margin-bottom: 8px;
+}
+
+.food-info p {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.6;
+    min-height: 42px;
+}
+
+.food-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.price {
+    color: #17823b;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.add-btn {
+    border: none;
+    background: #ff7a00;
+    color: white;
+    padding: 9px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background: #e96900;
+}
+
+/* FOOD ARROWS */
+
+.food-arrow {
+    position: absolute;
+    top: 45%;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background: #17823b;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.food-left {
+    left: 5px;
+}
+
+.food-right {
+    right: 5px;
+}
+
+/* SNACKS SECTION */
+
+.snacks-section {
+    background: #fff1e3;
+}
+
+.snack-title span {
+    color: #ff7a00 !important;
+}
+
+/* OFFER */
+
+.offer {
+    max-width: 1150px;
+    margin: 20px auto 80px;
+    padding: 55px;
+    border-radius: 30px;
+    background: linear-gradient(
+        120deg,
+        #17823b,
+        #39a85e
+    );
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.offer h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.offer-btn {
+    background: white;
+    color: #17823b;
+    padding: 13px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ABOUT */
+
+.about {
+    background: #fff0e1;
+    padding: 80px 20px;
+}
+
+.about-container {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.about-image,
+.about-text {
+    width: 50%;
+}
+
+.about-image img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 25px;
+}
+
+.about-text h2 {
+    font-size: 38px;
+    margin-bottom: 20px;
+}
+
+.about-text h2 span {
+    color: #17823b;
+}
+
+.about-text p {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #102d1b;
+    color: white;
+    padding: 60px 20px 20px;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+.footer-logo {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.footer-logo span {
+    color: #ff7a00;
+}
+
+footer h3 {
+    margin-bottom: 15px;
+}
+
+footer p,
+footer a {
+    color: #b7c4bb;
+    font-size: 14px;
+    line-height: 2;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: white;
+}
+
+.copyright {
+    max-width: 1100px;
+    margin: 40px auto 0;
+    padding-top: 20px;
+    text-align: center;
+    border-top: 1px solid #34523f;
+}
+
+/* MOBILE */
+
+@media(max-width:900px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .slide-content h1 {
+        font-size: 45px;
+    }
+
+    .feature-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .food-card {
+        min-width: calc(50% - 13px);
+    }
+
+    .about-container {
+        flex-direction: column;
+    }
+
+    .about-image,
+    .about-text {
+        width: 100%;
+    }
+
+    .footer-container {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px) {
+
+    .slider {
+        height: 520px;
+    }
+
+    .slide-content {
+        text-align: center;
+    }
+
+    .slide-content h1 {
+        font-size: 36px;
+    }
+
+    .slide-content p {
+        font-size: 14px;
+    }
+
+    .feature-container {
+        grid-template-columns: 1fr;
+    }
+
+    .food-card {
+        min-width: 100%;
+    }
+
+    .offer {
+        margin: 20px;
+        padding: 35px 20px;
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<header>
+<nav>
+
+    <div class="logo">
+        Home<span>Bite</span>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#menu">Meals</a></li>
+        <li><a href="#snacks">Snacks</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <button class="cart">
+        🛒 Cart <span id="cartCount">0</span>
+    </button>
+
+</nav>
+</header>
+
+
+<!-- HERO SLIDER -->
+
+<section class="slider" id="home">
+
+    <div class="slide slide1 active">
+        <div class="slide-content">
+            <small>🍃 FRESH • HEALTHY • HOMEMADE</small>
+
+            <h1>
+                Taste the
+                <span>love of home.</span>
+            </h1>
+
+            <p>
+                Delicious homemade meals prepared with fresh
+                ingredients and traditional recipes.
+            </p>
+
+            <a href="#menu" class="order-btn">
+                Explore Menu →
+            </a>
+        </div>
+    </div>
+
+    <div class="slide slide2">
+        <div class="slide-content">
+            <small>🍗 CHEF'S SPECIAL</small>
+
+            <h1>
+                Delicious food,
+                <span>made fresh.</span>
+            </h1>
+
+            <p>
+                Enjoy rich flavors and authentic homemade
+                recipes prepared with care.
+            </p>
+
+            <a href="#menu" class="order-btn">
+                Order Now →
+            </a>
+        </div>
+    </div>
+
+    <div class="slide slide3">
+        <div class="slide-content">
+            <small>🍚 TODAY'S SPECIAL</small>
+
+            <h1>
+                Good food.
+                <span>Good mood.</span>
+            </h1>
+
+            <p>
+                From biryani to traditional meals,
+                discover your favorite homemade dishes.
+            </p>
+
+            <a href="#menu" class="order-btn">
+                View Dishes →
+            </a>
+        </div>
+    </div>
+
+    <button class="arrow prev" onclick="changeSlide(-1)">❮</button>
+    <button class="arrow next" onclick="changeSlide(1)">❯</button>
+
+    <div class="dots">
+        <span class="dot active" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="features">
+
+<div class="feature-container">
+
+    <div class="feature">
+        <div class="feature-icon">🥬</div>
+        <h3>Fresh Ingredients</h3>
+        <p>Quality ingredients every day.</p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">👩‍🍳</div>
+        <h3>Homemade Taste</h3>
+        <p>Traditional recipes with love.</p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">❤️</div>
+        <h3>Healthy Food</h3>
+        <p>Nutritious meals for everyone.</p>
+    </div>
+
+    <div class="feature">
+        <div class="feature-icon">🚚</div>
+        <h3>Fast Delivery</h3>
+        <p>Fresh food at your doorstep.</p>
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- MEALS -->
+
+<section class="section" id="menu">
+
+<div class="section-title">
+
+    <h2>
+        Popular <span>Meals</span>
+    </h2>
+
+    <p>
+        Delicious homemade meals prepared fresh every day.
+    </p>
+
+</div>
+
+<div class="food-slider">
+
+<button class="food-arrow food-left" onclick="moveFood('meal',-1)">
+    ❮
+</button>
+
+<div class="food-track" id="mealTrack">
+
+    <div class="food-card">
+        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=700&q=80">
+
+        <div class="food-info">
+            <h3>South Indian Thali</h3>
+            <p>Rice, dal, vegetables, curry and delicious sides.</p>
+
+            <div class="food-bottom">
+                <span class="price">₹149</span>
+                <button class="add-btn" onclick="addCart('South Indian Thali')">+ Add</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="food-card">
+        <img src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=700&q=80">
+
+        <div class="food-info">
+            <h3>Chicken Curry</h3>
+            <p>Spicy homemade chicken curry with fresh spices.</p>
+
+            <div class="food-bottom">
+                <span class="price">₹179</span>
+                <button class="add-btn" onclick="addCart('Chicken Curry')">+ Add</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="food-card">
+        <img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=700&q=80">
+
+        <div class="food-info">
+            <h3>Paneer Masala</h3>
+            <p>Soft paneer cooked in creamy tomato gravy.</p>
+
+            <div class="food-bottom">
+                <span class="price">₹159</span>
+                <button class="add-btn" onclick="addCart('Paneer Masala')">+ Add</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="food-card">
+        <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=700&q=80">
+
+        <div class="food-info">
+            <h3>Veg Biryani</h3>
+            <p>Fragrant basmati rice with fresh vegetables.</p>
+
+            <div class="food-bottom">
+                <span class="price">₹139</span>
+                <button class="add-btn" onclick="addCart('Veg Biryani')">+ Add</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<button class="food-arrow food-right" onclick="moveFood('meal',1)">
+    ❯
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= INDIAN SNACKS ================= -->
+
+<section class="section snacks-section" id="snacks">
+
+<div class="section-title">
+
+    <h2>
+        Indian <span class="snack-title">Snacks</span> 🥘
+    </h2>
+
+    <p>
+        Crispy, spicy and freshly prepared Indian evening snacks.
+    </p>
+
+</div>
+
+
+<div class="food-slider">
+
+<button class="food-arrow food-left" onclick="moveFood('snack',-1)">
+    ❮
+</button>
+
+<div class="food-track" id="snackTrack">
+
+
+<!-- SAMOSA -->
+
+<div class="food-card">
+
+    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80">
+
+    <div class="food-info">
+
+        <h3>🥟 Samosa</h3>
+
+        <p>
+            Crispy potato-filled samosa served with chutney.
+        </p>
+
+        <div class="food-bottom">
+
+            <span class="price">₹40</span>
+
+            <button class="add-btn"
+            onclick="addCart('Samosa')">
+                + Add
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MIRCHI BAJJI -->
+
+<div class="food-card">
+
+    <img src="https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=700&q=80">
+
+    <div class="food-info">
+
+        <h3>🌶️ Mirchi Bajji</h3>
+
+        <p>
+            Spicy green chilli coated in crispy gram flour batter.
+        </p>
+
+        <div class="food-bottom">
+
+            <span class="price">₹50</span>
+
+            <button class="add-btn"
+            onclick="addCart('Mirchi Bajji')">
+                + Add
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PUNUGULU -->
+
+<div class="food-card">
+
+    <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=700&q=80">
+
+    <div class="food-info">
+
+        <h3>🍘 Punugulu</h3>
+
+        <p>
+            Crispy South Indian snack served with chutney.
+        </p>
+
+        <div class="food-bottom">
+
+            <span class="price">₹60</span>
+
+            <button class="add-btn"
+            onclick="addCart('Punugulu')">
+                + Add
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- VADA -->
+
+<div class="food-card">
+
+    <img src="https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=700&q=80">
+
+    <div class="food-info">
+
+        <h3>🍩 Medu Vada</h3>
+
+        <p>
+            Crispy outside and soft inside, served with chutney.
+        </p>
+
+        <div class="food-bottom">
+
+            <span class="price">₹50</span>
+
+            <button class="add-btn"
+            onclick="addCart('Medu Vada')">
+                + Add
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PAKORA -->
+
+<div class="food-card">
+
+    <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=700&q=80">
+
+    <div class="food-info">
+
+        <h3>🧅 Onion Pakora</h3>
+
+        <p>
+            Crunchy onion fritters with traditional spices.
+        </p>
+
+        <div class="food-bottom">
+
+            <span class="price">₹60</span>
+
+            <button class="add-btn"
+            onclick="addCart('Onion Pakora')">
+                + Add
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- BONDA -->
+
+<div class="food-card">
+
+    <img src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=700&q=80">
+
+    <div class="food-info">
+
+        <h3>🥔 Aloo Bonda</h3>
+
+        <p>
+            Soft spiced potato filling covered with crispy batter.
+        </p>
+
+        <div class="food-bottom">
+
+            <span class="price">₹50</span>
+
+            <button class="add-btn"
+            onclick="addCart('Aloo Bonda')">
+                + Add
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<button class="food-arrow food-right" onclick="moveFood('snack',1)">
+    ❯
+</button>
+
+</div>
+
+</section>
+
+
+<!-- OFFER -->
+
+<section class="offer">
+
+<div>
+
+<h2>🎉 20% OFF Your First Order</h2>
+
+<p>
+Enjoy delicious homemade food at a special price.
+</p>
+
+</div>
+
+<a href="#menu" class="offer-btn">
+Order Now →
+</a>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="about" id="about">
+
+<div class="about-container">
+
+<div class="about-image">
+
+<img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=900&q=80">
+
+</div>
+
+<div class="about-text">
+
+<h2>
+Made with <span>Love</span>,
+Served with Care.
+</h2>
+
+<p>
+At HomeBite, we believe food is more than just a meal.
+It brings people together and creates beautiful memories.
+</p>
+
+<p>
+From traditional meals to crispy Indian snacks, our food
+is prepared using fresh ingredients and homemade recipes.
+</p>
+
+<a href="#contact" class="order-btn">
+Contact Us
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer id="contact">
+
+<div class="footer-container">
+
+<div>
+
+<div class="footer-logo">
+Home<span>Bite</span>
+</div>
+
+<p>
+Fresh homemade food made with love
+and delivered to your doorstep.
+</p>
+
+</div>
+
+<div>
+
+<h3>Quick Links</h3>
+
+<p><a href="#home">Home</a></p>
+<p><a href="#menu">Meals</a></p>
+<p><a href="#snacks">Snacks</a></p>
+<p><a href="#about">About</a></p>
+
+</div>
+
+<div>
+
+<h3>Contact</h3>
+
+<p>📞 +91 98765 43210</p>
+<p>📧 hello@homebite.com</p>
+
+</div>
+
+<div>
+
+<h3>Follow Us</h3>
+
+<p>📷 Instagram</p>
+<p>📘 Facebook</p>
+<p>▶️ YouTube</p>
+
+</div>
+
+</div>
+
+<div class="copyright">
+
+<p>
+© 2026 HomeBite | All Rights Reserved
+</p>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* HERO SLIDER */
+
+let currentSlide = 0;
+
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
+
+function showSlide(index) {
+
+    if (index >= slides.length)
+        currentSlide = 0;
+
+    else if (index < 0)
+        currentSlide = slides.length - 1;
+
+    else
+        currentSlide = index;
+
+    slides.forEach(slide =>
+        slide.classList.remove("active")
+    );
+
+    dots.forEach(dot =>
+        dot.classList.remove("active")
+    );
+
+    slides[currentSlide].classList.add("active");
+    dots[currentSlide].classList.add("active");
+}
+
+function changeSlide(direction) {
+    showSlide(currentSlide + direction);
+}
+
+function goToSlide(index) {
+    showSlide(index);
+}
+
+/* Automatic hero movement */
+
+setInterval(function() {
+    changeSlide(1);
+}, 5000);
+
+
+/* FOOD SLIDERS */
+
+let mealPosition = 0;
+let snackPosition = 0;
+
+function moveFood(type, direction) {
+
+    const track =
+        document.getElementById(
+            type === "meal"
+            ? "mealTrack"
+            : "snackTrack"
+        );
+
+    const cards =
+        track.querySelectorAll(".food-card");
+
+    let visibleCards = 4;
+
+    if (window.innerWidth <= 900)
+        visibleCards = 2;
+
+    if (window.innerWidth <= 600)
+        visibleCards = 1;
+
+    let position =
+        type === "meal"
+        ? mealPosition
+        : snackPosition;
+
+    const maxPosition =
+        Math.max(0, cards.length - visibleCards);
+
+    position += direction;
+
+    if (position < 0)
+        position = maxPosition;
+
+    if (position > maxPosition)
+        position = 0;
+
+    if (type === "meal")
+        mealPosition = position;
+    else
+        snackPosition = position;
+
+    const cardWidth =
+        cards[0].offsetWidth + 25;
+
+    track.style.transform =
+        `translateX(-${position * cardWidth}px)`;
+}
+
+
+/* CART */
+
+let cartCount = 0;
+
+function addCart(foodName) {
+
+    cartCount++;
+
+    document.getElementById("cartCount").innerText =
+        cartCount;
+
+    alert(foodName + " added to cart! 🛒");
+}
+
+</script>
+
+</body>
+</html>
+```
